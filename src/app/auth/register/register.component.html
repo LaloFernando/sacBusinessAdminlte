@@ -1,0 +1,69 @@
+<div class="hold-transition register-page">
+    <div class="register-box animate__animated animate__backInLeft">
+        <div class="register-logo">
+            <a href="../../index2.html"><b>S@C</b>Business</a>
+        </div>
+
+        <div class="card ">
+            <div class="card-body register-card-body">
+                <p class="login-box-msg">Nuevo registro</p>
+
+                <form (ngSubmit)='crearUsuario()' [formGroup]="registerForm" autocomplete="off">
+
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Nombres" formControlName='US_CODIGO'>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user" style="color: rgb(48, 37, 37);"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Persona" formControlName='PE_CODIGO'>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope" style="color: rgb(48, 37, 37);"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Contraseña" formControlName='US_PASSWORD'>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock" style="color: rgb(48, 37, 37);;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Repetir contraseña" formControlName='password2'>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock" style="color: rgb(48, 37, 37);"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <select class="form-control" formControlName='US_PERMISO' (change)='cambioRol($event)'>
+                          <option value="">Seleccione el rol</option>
+                          <option *ngFor="let rol of Roles">{{rol}}</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-outline-secondary btn-block">Registrar</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+                <a routerLink="/login" class="text-center link-reg">Iniciar sesión</a>
+            </div>
+            <!-- /.form-box -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.register-box -->
+</div>
