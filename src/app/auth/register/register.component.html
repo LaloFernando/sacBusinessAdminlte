@@ -50,7 +50,12 @@
                     </div>
                     <div class="row">
                         <div class="col-8">
-
+                            <div class="col text-danger">
+                                <p *ngIf="campoNoValido('US_CODIGO')">El nombre es obligatorio</p>
+                                <p *ngIf="campoNoValido('PE_CODIGO')">El email es obligatorio</p>
+                                <p *ngIf="campoNoValido('US_PERMISO')">El rol es obligatorio</p>
+                                <p *ngIf="contrasenaNoValidas()">Las contraseñas tienen que ser iguales</p>
+                            </div>
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
