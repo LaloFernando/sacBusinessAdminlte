@@ -1,7 +1,14 @@
     .login-page {
-        background-image: url('../../../assets/dist/img/fondo-login.png');
+        /* background-image: url('../../../assets/dist/img/fondo-login.png');
         background-position: center center;
-        background-size: cover;
+        background-size: cover; */
+        background: linear-gradient( to top, #455279 10%, rgba(238, 245, 254) 50%, #455279 100%, #455279 100%);
+        background: -webkit-linear-gradient( to top, #3c8dba 39%, rgba(238, 245, 254) 50%, #3c8dba 58%, #3c8dba 100%);
+        background: -moz-linear-gradient( to top, #3c8dba 39%, rgba(238, 245, 254) 50%, #3c8dba 58%, #3c8dba 100%);
+        background: -ms-linear-background( to top, #3c8dba 39%, rgba(238, 245, 254) 50%, #3c8dba 58%, #3c8dba 100%);
+        /* background-image: url('../dist/img/empresafondo.jpg'); */
+        /* background-size: 100% 100%; */
+        /* background-attachment: fixed; */
     }
     
     .login-card-body,
@@ -9,12 +16,12 @@
         /*background-image: url('../../../assets/dist/img/fondo-plomo.jpg');*/
         background-position: center center;
         background-size: cover;
-        color: rgb(177, 186, 238);
+        color: #666;
     }
     
     .login-box,
     a {
-        color: rgb(177, 186, 238);
+        color: #666;
     }
     
     .social-auth-links,
@@ -23,9 +30,80 @@
     }
     
     .link-pass {
-        color: rgb(177, 186, 238);
+        color: #666;
     }
     
     .link-reg {
-        color: rgb(177, 186, 238);
+        color: #666;
+    }
+    
+    div.card {
+        /* Sombra normal */
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        background-color: rgba(251, 254, 255, 0.1);
+        padding: 20px 20px 20px 20px;
+    }
+    
+    .newlogon {
+        color: #e3e6e7;
+        font-size: .65rem;
+        font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 400 !important;
+        line-height: 1.5;
+        display: block;
+    }
+    
+    * {
+        box-sizing: border-box;
+    }
+    
+    a[class*="logo-"] {
+        width: 100%;
+        padding: 8px 4px;
+        margin: -2rem -2rem -2rem !important;
+        padding: 0;
+        display: inline-block;
+        text-align: center;
+        font-size: 3.5em;
+        color: #455279;
+        text-decoration: none;
+    }
+    
+    a[class*="logo-"] span {
+        color: #455279 !important;
+    }
+    
+    a.logo-1 {
+        font-family: 'Anton', sans-serif;
+    }
+    
+    a.logo-2 {
+        font-family: 'Solway', serif;
+    }
+    
+    a.logo-3 {
+        font-family: 'Bangers', cursive;
+        text-shadow: 0 1px 4px rgb(0 0 0 / 50%) !important;
+    }
+    
+    i.logo-31 {
+        font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: .75rem;
+        text-decoration: none;
+        letter-spacing: 2px;
+        line-height: 1.3em;
+        text-shadow: 0 1px 4px rgb(0 0 0 / 50%) !important;
+        color: #fffb00;
+        margin-left: -13px;
+    }
+    
+    label.logo-311 {
+        font-family: 'Arial', cursive;
+        font-size: .55rem;
+        text-decoration: none;
+        margin-left: -3px;
+    }
+    
+    a.logo-4 {
+        font-family: 'Meddon', cursive;
     }

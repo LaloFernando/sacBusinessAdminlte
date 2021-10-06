@@ -6,10 +6,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ProductosComponent } from './productos/productos.component';
 import { VentasComponent } from './ventas/ventas.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'dashboard',component: PagesComponent,
+    path: 'dashboard',component: PagesComponent, canActivate: [AuthGuard],
     children:[
       {path: '',component: DashboardComponent, data: {titulo: 'Escritorio'}},
       {path: 'usuarios',component: UsuariosComponent, data: {titulo: 'Usuarios'}},

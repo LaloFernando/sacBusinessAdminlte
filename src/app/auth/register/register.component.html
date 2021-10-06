@@ -1,12 +1,10 @@
 <div class="hold-transition register-page">
     <div class="register-box animate__animated animate__backInLeft">
-        <div class="register-logo">
-            <a href="../../index2.html"><b>S@C</b>Business</a>
-        </div>
 
         <div class="card ">
-            <div class="card-body register-card-body">
-                <p class="login-box-msg">Nuevo registro</p>
+            <div class="card-body register-card-body" style="background-color:transparent;">
+                <p class="login-box-msg">Nuevo Registro<br>
+                </p>
 
                 <form (ngSubmit)='crearUsuario()' [formGroup]="registerForm" autocomplete="off">
 
@@ -14,7 +12,7 @@
                         <input type="text" class="form-control" placeholder="Nombres" formControlName='US_CODIGO'>
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-user" style="color: rgb(48, 37, 37);"></span>
+                                <span class="fas fa-user" style="color: #6c757d;"></span>
                             </div>
                         </div>
                     </div>
@@ -22,7 +20,7 @@
                         <input type="text" class="form-control" placeholder="Persona" formControlName='PE_CODIGO'>
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope" style="color: rgb(48, 37, 37);"></span>
+                                <span class="fas fa-envelope" style="color:  #6c757d;"></span>
                             </div>
                         </div>
                     </div>
@@ -30,7 +28,7 @@
                         <input type="password" class="form-control" placeholder="Contraseña" formControlName='US_PASSWORD'>
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-lock" style="color: rgb(48, 37, 37);;"></span>
+                                <span class="fas fa-lock" style="color:  #6c757d;"></span>
                             </div>
                         </div>
                     </div>
@@ -38,7 +36,7 @@
                         <input type="password" class="form-control" placeholder="Repetir contraseña" formControlName='password2'>
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-lock" style="color: rgb(48, 37, 37);"></span>
+                                <span class="fas fa-lock" style="color:  #6c757d;"></span>
                             </div>
                         </div>
                     </div>
