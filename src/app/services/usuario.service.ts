@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { RegisterForm } from '../interfaces/register-Form.interface';
 import { LoginForm } from '../interfaces/login-Form.interface';
@@ -23,6 +23,16 @@ export class UsuarioService {
     return this.http.post(`${URL}/auth/login`, formData).pipe(tap((res:any) => {
       localStorage.setItem('token',res.token);
     }));
+  }
+
+  obtenerUsuarios(){
+
+    let headers  = new HttpHeaders({
+      'token':  localStorage.getItem('token') || '{}'
+    });
+
+    return this.http.get(`${URL}/users`,{headers});
+
   }
 
 }

@@ -9,7 +9,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagesComponent } from './pages.component';
 
-
+import { DataTablesModule } from "angular-datatables";
 
 
 @NgModule({
@@ -30,7 +30,8 @@ import { PagesComponent } from './pages.component';
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    DataTablesModule
   ]
 })
 export class PagesModule { }
