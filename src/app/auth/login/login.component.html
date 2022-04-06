@@ -1,3 +1,4 @@
+
 <div class="hold-transition login-page">
     <div class="login-box animate__animated animate__backInLeft">
         <!-- /.login-logo -->
@@ -8,37 +9,41 @@
                 <figure style="text-align: center;">
                     <a href="#" class="logo-3">S<span>@</span>C <i class="logo-31">Business </i><label class="logo-311">©</label></a>
                 </figure>
-                <form (ngSubmit)="login()" [formGroup]=" loginForm " autocomplete="off">
-                    <div class="input-group mb-3 ">
-                        <input type="text" class="form-control " placeholder="Usuario " formControlName="usuario">
-                        <div class="input-group-append ">
-                            <div class="input-group-text ">
-                                <span class="fas fa-user " style="color: #6c757d; "></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3 ">
-                        <input type="password" class="form-control " placeholder="Contraseña " formControlName="password">
-                        <div class="input-group-append ">
-                            <div class="input-group-text ">
-                                <span class="fas fa-lock " style="color: #6c757d; "></span>
-                            </div>
-                        </div>
-                    </div>
+                <form (ngSubmit)="login()" [formGroup]="loginForm" autocomplete="off">
+                    <mat-form-field class="example-form-field" appearance="fill">
+                        <mat-label>Usuario</mat-label>
+                        <input matInput type="text" formControlName="usuario" required>
+                        <button type="button" *ngIf="loginForm.value.usuario" matSuffix mat-icon-button aria-label="Clear" (click)="loginForm.controls['usuario'].setValue('');">
+                          <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-error *ngIf="isValidField('usuario')">
+                            {{ getErrorMessage('usuario') }}
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="example-form-field" appearance="fill">
+                        <mat-label>Contraseña</mat-label>
+                        <input [type]="hide ? 'password' : 'text'" matInput type="password" formControlName="password" required>
+                        <button type="button" *ngIf="loginForm.value.password" matSuffix mat-icon-button aria-label="clear" (click)="loginForm.controls['password'].setValue('');">
+                          <mat-icon>close</mat-icon>
+                        </button>
+                        <button type="button" matSuffix mat-icon-button aria-label="visbility" (click)="hide = !hide">
+                            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="isValidField('password')">
+                            {{ getErrorMessage('password') }}
+                        </mat-error>
+                    </mat-form-field>
+
                     <div class="row ">
                         <div class="col-8 ">
                             <div class="icheck-primary ">
-                                <input type="checkbox" id="remember" formControlName="remember">
-                                <label for="remember " class="ml-2 " style="color: #6c757d; ">
-                    Recordar usuario
-                  </label>
+                                <mat-checkbox formControlName="remember">Recordarme</mat-checkbox>
                             </div>
                         </div>
-                        <!-- /.col -->
                         <div class="col-4 ">
-                            <button type="submit " class="btn btn-outline-secondary btn-block ">Iniciar</button>
+                            <button type="submit" class="btn btn-outline-secondary btn-block ">Iniciar</button>
                         </div>
-                        <!-- /.col -->
                     </div>
                 </form>
 
@@ -50,9 +55,9 @@
                 <p class="mb-1 ">
                     <a href="forgot-password.html " class="link-pass "> Olvide mi contraseña</a>
                 </p>
-                <p class="mb-0 ">
-                    <a routerLink="/register " class="text-center link-reg ">Registrarme</a>
-                </p>
+                <!-- <p class="mb-0 ">
+                    <a routerLink="/register" class="text-center link-reg ">Registrarme</a>
+                </p> -->
             </div>
             <!-- /.login-card-body -->
         </div>

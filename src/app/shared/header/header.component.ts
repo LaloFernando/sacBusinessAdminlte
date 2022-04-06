@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  nombreUser = localStorage.getItem('nombreUs');
+
   constructor() { }
 
   ngOnInit(): void {

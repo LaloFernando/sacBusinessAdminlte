@@ -1,0 +1,42 @@
+                    <div class="cambiar-password-container">
+                        <form (ngSubmit)='changePassword()' [formGroup]="cambioContrasena"  autocomplete="off" class="form-horizontal">
+                            <mat-grid-list cols="1" rowHeight="70px">
+                                <mat-grid-tile  [colspan]="1" [rowspan]="1" >
+                                    <mat-form-field class="example-form-field" appearance="fill">
+                                        <mat-label>Anterior:</mat-label>
+                                        <input [type]="hide ? 'password' : 'text'" matInput type="password" [(ngModel)]="pass" formControlName="anteriorPassword" required>
+                                        <button type="button" *ngIf="pass" matSuffix mat-icon-button aria-label="clear" (click)="pass=''">
+                                        <mat-icon>close</mat-icon>
+                                        </button>
+                                        <button type="button" matSuffix mat-icon-button aria-label="visbility" (click)="hide = !hide">
+                                            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+                                        </button>
+                                        <mat-error *ngIf="isValidField('anteriorPassword')">
+                                            {{ getErrorMessage('anteriorPassword') }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </mat-grid-tile>
+                                <mat-grid-tile  [colspan]="1" [rowspan]="1" >
+                                    <mat-form-field class="example-form-field" appearance="fill">
+                                        <mat-label>Actual:</mat-label>
+                                        <input [type]="hide2 ? 'password' : 'text'" matInput type="password" [(ngModel)]="pass2" formControlName="nuevaPassword" required>
+                                        <button type="button" *ngIf="pass2" matSuffix mat-icon-button aria-label="clear" (click)="pass2=''">
+                                        <mat-icon>close</mat-icon>
+                                        </button>
+                                        <button type="button" matSuffix mat-icon-button aria-label="visbility" (click)="hide2 = !hide2">
+                                            <mat-icon>{{ hide2 ? "visibility_off" : "visibility" }}</mat-icon>
+                                        </button>
+                                        <mat-error *ngIf="isValidField('nuevaPassword')">
+                                            {{ getErrorMessage('nuevaPassword') }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </mat-grid-tile>
+                                <mat-grid-tile  [colspan]="1" [rowspan]="1" >
+                                    <div class="row container-botton">
+                                        <button submit mat-flat-button color='primary'><mat-icon>save</mat-icon> Guardar</button>
+                                    </div>
+                                </mat-grid-tile>
+                            </mat-grid-list>
+                        </form>
+                    </div>
+

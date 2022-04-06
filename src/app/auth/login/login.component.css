@@ -107,3 +107,7 @@
     a.logo-4 {
         font-family: 'Meddon', cursive;
     }
+
+    .example-form-field {
+        width: 100%;
+      }

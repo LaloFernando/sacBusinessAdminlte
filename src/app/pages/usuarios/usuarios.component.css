@@ -1,0 +1,29 @@
+.example-form-field {
+    width: 75%;
+    margin-right: 8px !important;
+  }
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 10%;
+}
+
+.botones-form{
+  margin-right: 8px !important;
+}
+
+.container-form{
+  display: flex;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+   width: 75%;
+}

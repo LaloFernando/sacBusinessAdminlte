@@ -11,11 +11,10 @@ declare var $: any;
   ]
 })
 export class SidebarComponent implements OnInit {
-  
+  user = localStorage.getItem('user');
   menuItems: any[];
   constructor(private sidebarService: SidebarService, private router: Router) {
     this.menuItems = sidebarService.menu;
-    console.log(this.menuItems)
    }
 
   ngOnInit(): void {
@@ -24,6 +23,9 @@ export class SidebarComponent implements OnInit {
 
   logout(){
     localStorage.removeItem('token');
+    localStorage.removeItem('serievta');
+    localStorage.removeItem('nombreUs');
+
     this.router.navigateByUrl('/login');
   }
 

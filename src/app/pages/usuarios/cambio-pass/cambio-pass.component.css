@@ -1,0 +1,24 @@
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .container-botton{
+    min-width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .mat-flat-button{
+    margin-right: 8px !important;
+  }
+
+  .cambiar-pasword-container{ 
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cambiar-password-container.form{ 
+    margin-bottom: 20px;
+  }

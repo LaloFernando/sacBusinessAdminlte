@@ -1,4 +1,6 @@
+import { DialogComponent } from '../app/shared/dialog/dialog.component';
 import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-root',
