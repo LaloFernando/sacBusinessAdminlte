@@ -1,0 +1,155 @@
+<section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+              <div class="card-header">
+                  <div class="row">
+                      <div class="card-icon" style = "font-size:20px">
+                          <span class="fa-gifts fas ml-2 nav-icon"></span>
+                      </div>
+                      <div class="col-10">
+                          <h3 class="card-title">Productos</h3>
+                      </div>
+                      <div class="col-1" style="text-align: end;">
+                          <button id="btnNuevo" 
+                          mat-mini-fab color="primary" 
+                          #tooltip="matTooltip"
+                          matTooltip="Crear"
+                          matTooltipPosition="left"
+                          TooltipTouchGestures = 'auto'
+                          matTooltipClass='Tooltip'
+                          aria-label="Nuevo Producto" (click)="crearProducto()">
+                              <mat-icon>add</mat-icon>
+                            </button>
+                      </div>
+                  </div>
+              </div>
+              <!-- /.card-header -->
+              <!--LISTADO DE LAS PERSONAS-->
+              <div class="card-body" id="listadoregistros">
+                <mat-grid-list cols="2" rowHeight="55px">
+                  <mat-grid-tile  >
+                    <button mat-raised-button color="primary" 
+                            (click)="exporter.exportTable('xlsx', {fileName:'Productos', sheet: 'productos', Props: {Author: 'S@CBusiness'}})">EXCEL</button>
+                    &nbsp;
+                    <button id="export" mat-raised-button color="primary" 
+                            (click)="exporter.exportTable('csv', {fileName:'Productos', sheet: 'productos', Props: {Author: 'S@CBusiness'}})">CSV</button>
+                    &nbsp;
+                    <button id="export" mat-raised-button color="primary" 
+                            (click)="generatePdf()">PDF</button>
+                    <span class="flexExpand"></span>
+                  </mat-grid-tile>
+                  <mat-grid-tile >
+                    <span class="flexExpand"></span>
+                    <mat-form-field class="example-form-field" appearance="legacy">
+                      <mat-label>Buscar</mat-label>
+                      <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input>
+                    </mat-form-field>
+                  </mat-grid-tile>
+                </mat-grid-list>
+                    <div class="mat-elevation-z8 impresion" style="padding: inherit;" id="htmlData">
+                      <h2>Lista de Productos</h2>
+                      <mat-divider></mat-divider>
+                      <table mat-table [dataSource]="dataSource" matSort matTableExporter  #exporter="matTableExporter" [hiddenColumns]="[0,8]" class="impresion">
+                    
+                      <ng-container matColumnDef="Id">
+                        <th mat-header-cell [style.display]="'none'" *matHeaderCellDef mat-sort-header> Id </th>
+                        <td mat-cell [style.display]="'none'" *matCellDef="let element"> {{element.AR_CODGENE}} </td>
+                      </ng-container>
+                    
+                      <ng-container matColumnDef="Codigo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header  class="width-col75"> Codigo</th>
+                        <td mat-cell *matCellDef="let element"  class="width-col75"> 
+                          <a #tooltip="matTooltip"
+                            matTooltip="Editar"
+                            matTooltipPosition="above"
+                            TooltipTouchGestures = 'auto'
+                            matTooltipClass='Tooltip' routerLink="/" (click)="editarProducto(element.AR_CODGENE,element.AR_IMAGEN1)" >
+                            {{element.AR_CODKEY}} 
+                          </a>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="Auxiliar">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header="Razon" class="width-col50"> Auxiliar </th>
+                        <td mat-cell *matCellDef="let element" class="width-col50"> {{element.AR_CODIGO }} </td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="Img">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="width-col25"> Img </th>
+                        <td mat-cell *matCellDef="let element" class="width-col25"> 
+                          <img width=20 src={{pathImage}}{{element.AR_IMAGEN1}} alt="" id="logoNuevo"> 
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Descripcion">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="width-col250"> Descripción </th>
+                        <td mat-cell *matCellDef="let element" class="width-col250"> {{element.AR_DESCRIPCION}} </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Stock">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="width-col50"> Stock </th>
+                        <td mat-cell *matCellDef="let element" class="width-col50"> {{element.AR_STOCK}} </td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="Precio">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="width-col50"> Precio </th>
+                        <td mat-cell *matCellDef="let element" class="width-col50"> {{element.AR_PRECIODIS_DOLAR}} </td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="Tipo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="width-col50"> Tipo </th>
+                        <td mat-cell *matCellDef="let element" class="width-col50"> {{element.AR_AFECSTOCK}} </td>
+                      </ng-container>
+  
+                        <ng-container matColumnDef="Iva">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header class="width-col25"> Iva </th>
+                          <td mat-cell *matCellDef="let element" class="width-col25"> {{element.AR_IVA}} </td>
+                        </ng-container>
+  
+                        <ng-container matColumnDef="Estado">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header class="width-col50"> Estado </th>
+                          <td mat-cell *matCellDef="let element" class="width-col50"> {{element.AR_ESTADO}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Acciones">
+                          <th mat-header-cell *matHeaderCellDef class="width-col15"> </th>
+                          <td mat-cell *matCellDef="let element" class="width-col15">
+                              <div class="row">
+                                  <button mat-icon-button 
+                                  color='warn' 
+                                  #tooltip="matTooltip"
+                                  matTooltip="Eliminar"
+                                  matTooltipPosition="above"
+                                  TooltipTouchGestures = 'auto'
+                                  matTooltipClass='Tooltip'
+                                  (click)="eliminarProducto(element.AR_CODGENE,element.AR_DESCRIPCION,element.AR_IMAGEN1)"><mat-icon>delete</mat-icon></button>
+                              </div>
+                          </td>
+                        </ng-container>
+                    
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    
+                      <!-- Row shown when there is no matching data. -->
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                      </tr>
+                    </table>
+                  </div>
+                  
+                  <div class="row" class="mt-3">
+                    <span class="flexExpand"></span>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                                      showFirstLastButtons 
+                                      aria-label="Select page of periodic elements">
+                    </mat-paginator>
+                  </div>
+                </div>
+              <!-- /.form-box -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </div>
+  </section>

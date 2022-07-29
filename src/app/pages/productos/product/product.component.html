@@ -1,0 +1,201 @@
+  
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="card-icon">
+                            <span class="fa fa-users nav-icon"></span>
+                        </div>
+                        <div class="col-10">
+                            <h3 class="card-title">{{ titulo }}</h3>
+                        </div>
+                    </div>
+                </div>
+                  <!-- /.card-body Regsitro de Personas-->
+                  <div class="card-body" id="formularioregistros">
+                    <form (ngSubmit)='guardarProducto()' [formGroup]="registerFormU" autocomplete="off" class="form-horizontal">
+                      <div class="contenedor">
+                        <div class="tipo-form">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                  <mat-form-field class="example-form-field" appearance="legacy">
+                                    <input matInput type="text" id="identificacion" formControlName="AR_CODKEY" required placeholder="Codigo" (keyup)="registerFormU.controls['AR_CODKEY'].setValue(registerFormU.value.AR_CODKEY.toUpperCase());">
+                                    <button type="button" *ngIf="registerFormU.value.AR_CODKEY" matSuffix mat-icon-button aria-label="Clear" (click)="registerFormU.controls['AR_CODKEY'].setValue('');">
+                                      <mat-icon>close</mat-icon>
+                                    </button>
+                                    <button type="button" *ngIf="registerFormU.value.AR_CODKEY" matSuffix mat-icon-button aria-label="search" (click)="obtenerIdentificacionProducto(registerFormU.value.AR_CODKEY);">
+                                      <mat-icon>search</mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="isValidField('AR_CODKEY')">
+                                        {{ getErrorMessage('AR_CODKEY') }}
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-lg-6">
+                                    <mat-form-field class="example-form-field" appearance="legacy">
+                                      <input matInput type="text" formControlName="AR_CODIGO" placeholder="Auxiliar" (keyup)="registerFormU.controls['AR_CODIGO'].setValue(registerFormU.value.AR_CODIGO.toUpperCase());">
+                                      <button type="button" *ngIf="registerFormU.value.AR_CODIGO" matSuffix mat-icon-button aria-label="Clear" (click)="registerFormU.controls['AR_CODIGO'].setValue('');">
+                                        <mat-icon>close</mat-icon>
+                                      </button>
+                                      <button type="button" *ngIf="registerFormU.value.AR_CODIGO" matSuffix mat-icon-button aria-label="search" (click)="obtenerIdentificacionProducto(registerFormU.value.AR_CODIGO);">
+                                        <mat-icon>search</mat-icon>
+                                      </button>
+                                      <mat-error *ngIf="isValidField('AR_CODIGO')">
+                                        {{ getErrorMessage('AR_CODIGO') }}
+                                    </mat-error>
+                                    </mat-form-field>
+                                  </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                  <mat-form-field class="example-form-field" appearance="legacy">
+                                    <input matInput type="text" id="nombre" formControlName="AR_DESCRIPCION" placeholder="Descripción" required (keyup)="registerFormU.controls['AR_DESCRIPCION'].setValue(registerFormU.value.AR_DESCRIPCION.toUpperCase());">
+                                    <button type="button" *ngIf="registerFormU.value.AR_DESCRIPCION" matSuffix mat-icon-button aria-label="Clear" (click)="registerFormU.controls['AR_DESCRIPCION'].setValue('');">
+                                      <mat-icon>close</mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="isValidField('AR_DESCRIPCION')">
+                                        {{ getErrorMessage('AR_DESCRIPCION') }}
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+                              </div>
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <mat-form-field class="example-form-field" appearance="legacy">
+                                <mat-select matNativeControl placeholder="Tipo Bien" required formControlName='AR_AFECSTOCK' (change)='cambioRol($event)'>
+                                    <mat-option *ngFor="let rol of Roles " value="{{rol}}">
+                                      {{rol}}
+                                    </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div class="col-lg-6">
+                                <mat-slide-toggle class="togglebutton" formControlName="AR_IVA">Grava IVA</mat-slide-toggle>
+                            </div>
+                        </div>
+
+    
+                        <div class="row">
+                          <div class="col-lg-4">
+                            <mat-form-field class="example-form-field" appearance="legacy">
+                              <input matInput type="number" formControlName="AR_COSTO_DOLAR" placeholder="Costo" required >
+                              <button type="button" *ngIf="registerFormU.value.AR_COSTO_DOLAR" matSuffix mat-icon-button aria-label="Clear" (click)="registerFormU.controls['AR_COSTO_DOLAR'].setValue('0.0000');">
+                                <mat-icon>close</mat-icon>
+                              </button>
+                              <mat-error *ngIf="isValidField('AR_COSTO_DOLAR')">
+                                {{ getErrorMessage('AR_COSTO_DOLAR') }}
+                            </mat-error>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-lg-4">
+                            <mat-form-field class="example-form-field" appearance="legacy">
+                              <input matInput type="number" formControlName="AR_PORPREDIS" placeholder="Utilidad" required>
+                              <button type="button" *ngIf="registerFormU.value.AR_PORPREDIS" matSuffix mat-icon-button aria-label="Clear" (click)="registerFormU.controls['AR_PORPREDIS'].setValue('0');">
+                                <mat-icon>close</mat-icon>
+                              </button>
+                              <mat-error *ngIf="isValidField('AR_PORPREDIS')">
+                                {{ getErrorMessage('AR_PORPREDIS') }}
+                            </mat-error>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-lg-4">
+                            <mat-form-field class="example-form-field" appearance="legacy">
+                              <input matInput type="number" formControlName="AR_PRECIODIS_DOLAR" placeholder="Precio PVP" required>
+                              <button type="button" *ngIf="registerFormU.value.AR_PRECIODIS_DOLAR" matSuffix mat-icon-button aria-label="Clear" (click)="registerFormU.controls['AR_PRECIODIS_DOLAR'].setValue('0.0000');">
+                                <mat-icon>close</mat-icon>
+                              </button>
+                              <mat-error *ngIf="isValidField('AR_PRECIODIS_DOLAR')">
+                                {{ getErrorMessage('AR_PRECIODIS_DOLAR') }}
+                            </mat-error>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <mat-form-field class="example-form-field" appearance="outline">
+                                    <mat-label>Stock Disponible</mat-label>
+                                    <input matInput type="text" disabled [value] = "stock">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4">
+                                <mat-form-field class="example-form-field" appearance = "outline">
+                                  <mat-label>Fecha Ult.Ingreso</mat-label>
+                                    <input matInput type="text" disabled [value] = "fechaUltCmp">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4">
+                                <mat-form-field class="example-form-field" appearance = "outline">
+                                    <mat-label>Fecha Ult.Venta</mat-label>
+                                    <input matInput type="text" disabled [value] = "fechaUltVta">
+                              </mat-form-field>
+                            </div>
+                          </div>
+                      </div>
+    
+                        <div class="tipo">
+                            <div class="row">
+                                <div class="col-lg-12" style="margin-bottom: 25px;">
+                                    <mat-label>Imagen</mat-label>
+                                    <mat-divider></mat-divider>
+                                    <br>
+                                    <div class="kt-avatar kt-avatar--outline kt-avatar--changed" id="logo">
+                                        <div class="kt-avatar__holder">
+                                            <div *ngIf="verImage">
+                                              <img class="logo" [src]="verImage" alt="" id="logoNuevo">
+                                            </div>
+                                        </div> 
+                                        <label 
+                                            #tooltip="matTooltip"
+                                            matTooltip="Cambiar Imagen"
+                                            matTooltipPosition="above"
+                                            TooltipTouchGestures = 'auto'
+                                            matTooltipClass='Tooltip'
+                                            class="kt-avatar__upload">
+                                            <i class="fa fa-pen">
+                                                <input id="fotos" name="fotos" multiple type="file" accept="image/jpeg, image/png, image/pjpeg, image/bmp" (change)="capturarImage($event)">
+                                            </i>
+                                        </label>
+                                        <span  *ngIf="quitarImg"
+                                            #tooltip="matTooltip"
+                                            matTooltip="Quitar Imagen"
+                                            matTooltipPosition="above"
+                                            TooltipTouchGestures = 'auto'
+                                            matTooltipClass='Tooltip'
+                                            class="kt-avatar__cancel" (click)="clearImage()">
+                                            <i class="fa fa-times">
+
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="row">
+                                <div *ngIf="editar" class="col-lg-12">
+                                    <mat-slide-toggle class="togglebutton" formControlName="AR_ESTADO">Activar Producto.</mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="tipo-botones">
+                            <button class="botones-form" mat-flat-button color="warn" (click)="cancelarform() " type="button" >
+                              <mat-icon>cancel</mat-icon> Cancelar
+                            </button>
+                            <button mat-flat-button [disabled]="loading" color="primary" type="submit"  >
+                              <mat-icon>save</mat-icon> Guardar
+                            </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>        
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+        </div>
+      </section>

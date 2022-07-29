@@ -19,8 +19,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableExporterModule } from 'mat-table-exporter';
  
-
 
 const materialModule = [
   MatSliderModule,
@@ -34,7 +39,13 @@ const materialModule = [
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
-  MatCardModule
+  MatCardModule,
+  MatDividerModule,
+  MatTooltipModule,
+  MatSlideToggleModule,
+  MatChipsModule,
+  MatSelectModule,
+  MatTableExporterModule
 ];
 
 @NgModule({

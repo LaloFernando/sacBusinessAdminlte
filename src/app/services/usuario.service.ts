@@ -27,6 +27,7 @@ export class UsuarioService {
       localStorage.setItem('token',res.token);
       localStorage.setItem('serievta',res.datosUsuario[0].US_SERIEVTA);
       localStorage.setItem('nombreUs',res.datosUsuario[0].US_NOMBRE);
+      localStorage.setItem('eNomComercial',res.datosUsuario[0].CI_NOMCOMERCIAL);
     }));
   }
 

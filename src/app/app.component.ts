@@ -1,5 +1,6 @@
-import { DialogComponent } from '../app/shared/dialog/dialog.component';
 import { Component } from '@angular/core';
+import * as jsPDF from 'jspdf';
+import * as html2canvas from 'html2canvas';
 
 
 @Component({
@@ -10,3 +11,5 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'adminlte';
 }
+
+

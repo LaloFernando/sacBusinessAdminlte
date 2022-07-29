@@ -1,13 +1,19 @@
+<mat-grid-list cols="8" rowHeight="63px">
+    <mat-grid-tile  [colspan]="7" [rowspan]="1" >
+      <h2 mat-dialog-title >{{ data.message }}</h2> 
+    </mat-grid-tile>
+    <mat-grid-tile  [colspan]="1" [rowspan]="1">
+      <span class="cerrar" 
+      [mat-dialog-close]>X</span> 
+    </mat-grid-tile>
+</mat-grid-list> 
+<mat-divider></mat-divider>
 
-<div>
-  <h2 mat-dialog-title style="float: left">{{ data.message }}</h2> 
-  <span style="float: right" [mat-dialog-close]>X</span> 
-</div> 
-<div mat-dialog-content style="clear: both"></div>
 <mat-dialog-content class="dialog-content">
-  
-  <app-cambio-pass>
-  </app-cambio-pass>
+  <div *ngIf="data.message == 'Cambiar Contraseña'">
+    <app-cambio-pass>
+    </app-cambio-pass>
+  </div>
 
 </mat-dialog-content>
 

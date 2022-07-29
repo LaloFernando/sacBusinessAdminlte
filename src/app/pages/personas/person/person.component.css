@@ -1,0 +1,39 @@
+.example-form-field {
+    width: 100%;
+    margin-right: 8px !important;
+	font-weight: 100;
+  }
+
+.mat-form-field {
+  font-size: 14px;
+  /* width: 100%; */
+}
+
+.botones-form{
+  margin-right: 8px !important;
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: 0 auto;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(2, auto);
+
+	grid-template-areas: "tipo-form tipo-form tipo"
+             			 "tipo-botones tipo-botones tipo-botones";
+}
+
+@media screen and (max-width: 768px){
+	.contenedor {
+		grid-template-areas: "tipo-form tipo-form tipo-form"
+							 "tipo tipo tipo"
+							 "tipo-botones tipo-botones tipo-botones";
+	}
+}
+
+.mat-elevation-z8 {    
+  overflow-x: auto;
+ }

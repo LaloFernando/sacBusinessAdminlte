@@ -1,0 +1,164 @@
+.example-form-field {
+    width: 100%;
+    margin-right: 8px !important;
+	font-weight: 100;
+  }
+
+.mat-form-field {
+  font-size: 14px;
+}
+
+.botones-form{
+  margin-right: 8px !important;
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 1000px;
+	margin: 0 auto;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(2, auto);
+
+	grid-template-areas: "tipo-form tipo-form tipo"
+             			 "tipo-botones tipo-botones tipo-botones";
+}
+
+@media screen and (max-width: 768px){
+	.contenedor {
+		grid-template-areas: "tipo-form tipo-form tipo-form"
+							 "tipo tipo tipo"
+							 "tipo-botones tipo-botones tipo-botones";
+	}
+}
+
+.mat-elevation-z8 {    
+  overflow-x: auto;
+ }
+
+
+ input[type="file" i] {
+    appearance: none;
+    background-color: initial;
+    cursor: default;
+    align-items: baseline;
+    color: inherit;
+    text-overflow: ellipsis;
+    white-space: pre;
+    text-align: start !important;
+    padding: initial;
+    border: initial;
+    overflow: hidden !important;
+}
+
+.kt-avatar {
+    position: relative;
+    display: inline-block;
+}
+
+.kt-avatar .kt-avatar__upload i, .kt-avatar__guardar i {
+    color: #22b9ff;
+    font-size: .9rem;
+}
+
+.kt-avatar .kt-avatar__upload{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 0 13px 0 rgb(0 0 0 / 10%);
+    transition: all .3s;
+}
+
+.kt-avatar .kt-avatar__guardar{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: -10px;
+    top: 30px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 0 13px 0 rgb(0 0 0 / 10%);
+    transition: all .3s;
+}
+
+.kt-avatar .kt-avatar__upload input {
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.kt-avatar .kt-avatar__upload:hover, .kt-avatar .kt-avatar__guardar:hover {
+    transition: all .3s;
+    background-color: #22b9ff;
+}
+
+.kt-avatar .kt-avatar__upload:hover i, .kt-avatar .kt-avatar__guardar:hover i{
+    color: #fff;
+}
+
+.kt-avatar.kt-avatar--outline .kt-avatar__holder {
+    border: 3px solid #fff;
+    box-shadow: 0 0 13px 0 rgb(0 0 0 / 10%);
+    background-size: contain;
+    background-position-y: center;
+}
+
+.logo {
+    background-position: center center;
+    background-size: contain;
+    background-image: url();
+    width:210px;
+    height:210px;
+}
+
+.kt-avatar.kt-avatar--changed .kt-avatar__cancel {
+    display: flex;
+}
+
+.kt-avatar .kt-avatar__cancel i {
+    transition: all .3s;
+    color: #62667b;
+    font-size: .9rem;
+}
+
+.kt-avatar .kt-avatar__cancel:hover i {
+    transition: all .3s;
+    color: #22b9ff;
+}
+
+.kt-avatar .kt-avatar__cancel {
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: auto;
+    right: -10px;
+    bottom: -5px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 0 13px 0 rgb(0 0 0 / 10%);
+    display: none;
+}
+.kt-avatar .kt-avatar__holder {
+    width: 220px;
+    height: 220px;
+    border-radius: 3px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

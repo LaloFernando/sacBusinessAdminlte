@@ -1,18 +1,25 @@
 import { AuthRoutingModule } from './auth/auth-routing.module';
-import { NopageFoundComponent } from './nopage-found/nopage-found/nopage-found.component';
 
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { PagesRoutingModule } from './pages/pages-routing.module';
 
 const routes: Routes = [
-  {path: '',redirectTo: '/login',pathMatch: 'full'},
-  {path:'**', component: NopageFoundComponent}
+  // {path: '',redirectTo: '/login',pathMatch: 'full'},
+  // {path:'**', component: NopageFoundComponent}
+  {path: 'login',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes
+    //, {
+    //   enableTracing: true, // <-- debugging purposes only
+    //   preloadingStrategy: PreloadAllModules
+    // }
+    ),
     PagesRoutingModule,
     AuthRoutingModule
   ],

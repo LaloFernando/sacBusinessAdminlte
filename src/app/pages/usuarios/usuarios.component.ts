@@ -18,19 +18,24 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent implements AfterViewInit,OnInit,OnDestroy {
+
+  private subscription: Subscription = new Subscription;
+
   formSubmitted = false;
+
+  listado = false;
+  crear = false;
+  editar = false;
 
   displayedColumns: string[] = ['Usuario', 'Nombre', 'Email', 'Contrasenia', 'Rol', 'Estado', 'Acciones'];
   dataSource = new MatTableDataSource();
 
-  @ViewChild(MatPaginator, { static: true })
-  paginator!: MatPaginator 
-  @ViewChild(MatSort, { static: true })
-  sort!: MatSort 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   
 
   Roles: any = ['N-Administrador','S-Editor'];
-  titulo = "Lista de Usuarios";
+  titulo = "Usuarios";
 
   hide = true;
   hide2 = true;
@@ -60,7 +65,7 @@ export class UsuariosComponent implements AfterViewInit,OnInit,OnDestroy {
 
   constructor(private fb:FormBuilder, private router:Router, private usuarioSvc:UsuarioService, private chref : ChangeDetectorRef,public dialog: MatDialog) { }
 
-  crearUsuario(){
+  guardarUsuario(){
     //console.log(this.registerFormU.value);
     this.formSubmitted = true;
     if (this.registerFormU.invalid) {
@@ -79,21 +84,54 @@ export class UsuariosComponent implements AfterViewInit,OnInit,OnDestroy {
       US_ESTADO: 'AC',
     }
     //Realizar posteo
-    //console.log(newRegistro);
-    this.usuarioSvc.newUsuario(newRegistro).subscribe(res =>{
+    if (this.editar == false) {
+      //console.log(newRegistro);
+      this.subscription.add(
+        this.usuarioSvc.newUsuario(newRegistro).subscribe(res =>{
 
-      Swal.fire('Exito', 'Usuario creado correctamente...!!', 'success');
+          Swal.fire('Exito', 'Usuario creado correctamente...!!', 'success');
 
-      //this.usuarioSvc.clearCache();
-        this.obtenerUsuario();
-        this.limpiar();
-      
-    },(err)=>{
+          //this.usuarioSvc.clearCache();
+            this.obtenerUsuario();
+            this.cancelarform();
+            this.chref.detectChanges();
+          
+        },(err)=>{
 
-      const errorServer = JSON.parse(err.error);
-      Swal.fire('Error', errorServer.message, 'error');
+          const errorServer = JSON.parse(err.error);
+          Swal.fire('Error', errorServer.message, 'error');
 
-    });
+        })
+      );
+
+    }else{
+      this.subscription.add(
+        this.usuarioSvc.editarUsuario(localStorage.getItem('idUser')!, newRegistro).subscribe(res=>{
+
+          Swal.fire({
+            icon:'success',
+            title:'Exito',
+            text:'El usuario se actualizo correctamente',
+            confirmButtonText:'Ok'
+          }).then((result)=>{
+    
+            if (result) {
+              this.obtenerUsuario();
+              this.cancelarform();
+              this.chref.detectChanges();
+            }
+    
+          });
+    
+    
+        },(err)=>{
+          
+            Swal.fire('Error', err.error.message, 'error');
+    
+        })
+      );
+
+    }
   }
   
   get roles(): any{
@@ -109,6 +147,7 @@ export class UsuariosComponent implements AfterViewInit,OnInit,OnDestroy {
 
   getErrorMessage(campo: string){
     let message;
+    console.log(this.registerFormU.get(campo));
     if(this.registerFormU.get(campo)!.errors!.required){
       message = "Campo requerido...!!";
     }else if (this.registerFormU.get(campo)!.hasError('pattern')){
@@ -116,6 +155,8 @@ export class UsuariosComponent implements AfterViewInit,OnInit,OnDestroy {
     }else if (this.registerFormU.get(campo)!.hasError('minlength')){
       const minLength = this.registerFormU.get(campo)!.errors?.minlength.requiredLength;
       message = `El campo debe contener minimo ${minLength} caracteres...!!`;
+    }else if (this.registerFormU.get(campo)!.hasError('noEsIgual')==true){
+      message = "Las contraseñas deben ser iguales...!!";
     }
     return message;
   }
@@ -127,17 +168,17 @@ export class UsuariosComponent implements AfterViewInit,OnInit,OnDestroy {
     );
   }
 
-  contrasenaNoValidas(){
+  // contrasenaNoValidas(){
 
-    const pass1 = this.registerFormU.get('US_PASSWORD')?.value;
-    const pass2 = this.registerFormU.get('password2')?.value;
-//&& this.formSubmitted
-    if ((pass1 !== pass2) ) {
-      return true;
-    }else{
-      return false;
-    }
-  }
+  //   const pass1 = this.registerFormU.get('US_PASSWORD')?.value;
+  //   const pass2 = this.registerFormU.get('password2')?.value;
+  //   //&& this.formSubmitted
+  //   if ((pass1 !== pass2) ) {
+  //     return true;
+  //   }else{
+  //     return false;
+  //   }
+  // }
 
   passwordsIguales(pass1Name: string, pass2Name: string){
     return (formGroup: FormGroup) => {
@@ -152,6 +193,11 @@ export class UsuariosComponent implements AfterViewInit,OnInit,OnDestroy {
     }
   }
 
+  ngAfterViewInit():void{
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   ngOnInit(): void {
     
     this.obtenerUsuario();
@@ -163,43 +209,50 @@ export class UsuariosComponent implements AfterViewInit,OnInit,OnDestroy {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   obtenerUsuario(){
-
-    this.usuarioSvc.obtenerUsuarios().subscribe((res: any) => {
-      this.dataSource.data = res;
-      this.chref.detectChanges();
+    this.subscription.add(
+      this.usuarioSvc.obtenerUsuarios().subscribe((res: any) => {
+        this.dataSource.data = res;
+        this.chref.detectChanges();
       })
+    )
   }
 
   // Mostrar formulario
   mostrarform(flag:string) {
     if (flag == '1') {
+      this.listado = false;
       $("#listadoregistros").hide();
-      $("#formularioEdit").hide();
+      this.crear = true;
+      this.editar = false;
+
       $("#btnNuevo").hide();
-      $("#formularioregistros").show();
+
       this.titulo = "Crear Usuario";
     } else if (flag == '2'){
+      this.listado = false;
       $("#listadoregistros").hide();
-      $("#formularioregistros").hide();
+      this.crear = true;
+      this.editar = true;
+
       $("#btnNuevo").hide();
-      $("#formularioEdit").show();
+
       this.titulo = "Editar Usuario";
     } else if (flag == '0'){
+      this.listado = true;
       $("#listadoregistros").show();
+      this.crear = false;
+      this.editar = false;
+      
       $("#btnNuevo").show();
-      $("#formularioregistros").hide();
-      $("#formularioEdit").hide();
-      this.titulo = "Lista de Usuarios";
+      
+      this.titulo = "Usuarios";
     }
-  }
-
-
-  ngAfterViewInit():void{
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   //limpiamos la pantalla y la mostramos
@@ -229,70 +282,28 @@ export class UsuariosComponent implements AfterViewInit,OnInit,OnDestroy {
   llenarForm(id:string){
     
     this.mostrarform('2');
+    this.subscription.add(
+      this.usuarioSvc.obtenerIdUsuario(id).subscribe((res: any) => {
 
-    this.usuarioSvc.obtenerIdUsuario(id).subscribe((res: any) => {
-
-     this.registerFormU.setValue({
-       
-      US_CODCIA: res['US_CODCIA'],
-      US_CODIGO: res['US_CODIGO'],
-      PE_CODIGO: res['PE_CODIGO'],
-      US_PASSWORD: [''],
-      password2:   [''],
-      US_PERMISO: res['US_PERMISO'],
-      US_CODBODE: res['US_CODBODE'],
-      US_SERIEVTA: res['US_SERIEVTA'],
-      US_NOMBRE: res['US_NOMBRE'],
-      US_EMAIL: res['US_EMAIL'],
-      US_ESTADO: res['US_ESTADO'] == 'AC' ? true : false
-     });
-
-     localStorage.setItem('idUser', res['US_CODIGO']);
-
-    });
-  }
-
-  editarUsuario(){
-    
-    const newRegistro :RegisterForm = {
-      US_CODCIA: this.registerFormU.value.US_CODCIA,
-      US_CODIGO: this.registerFormU.value.US_CODIGO,
-      PE_CODIGO: this.registerFormU.value.PE_CODIGO,
-      US_PASSWORD: this.registerFormU.value.US_PASSWORD,
-      US_PERMISO: this.registerFormU.value.US_PERMISO.substring(0,1),
-      US_CODBODE: this.registerFormU.value.US_CODBODE,
-      US_SERIEVTA: this.registerFormU.value.US_SERIEVTA,
-      US_NOMBRE: this.registerFormU.value.US_NOMBRE,
-      US_EMAIL: this.registerFormU.value.US_EMAIL,
-      US_ESTADO: this.registerFormU.value.US_ESTADO ? 'AC' : 'IN',
-    }
-    
-    this.usuarioSvc.editarUsuario(localStorage.getItem('idUser')!, newRegistro).subscribe(res=>{
-
-      Swal.fire({
-        icon:'success',
-        title:'Exito',
-        text:'El usuario se actualizo correctamente',
-        confirmButtonText:'Ok'
-      }).then((result)=>{
-
-        if (result) {
-            
-          this.obtenerUsuario();
-          this.cancelarform();
-
-        }
-
+      this.registerFormU.setValue({
+        
+        US_CODCIA: res['US_CODCIA'],
+        US_CODIGO: res['US_CODIGO'],
+        PE_CODIGO: res['PE_CODIGO'],
+        US_PASSWORD: '123',
+        password2:   '123',
+        US_PERMISO: res['US_PERMISO'],
+        US_CODBODE: res['US_CODBODE'],
+        US_SERIEVTA: res['US_SERIEVTA'],
+        US_NOMBRE: res['US_NOMBRE'],
+        US_EMAIL: res['US_EMAIL'],
+        US_ESTADO: res['US_ESTADO'] == 'AC' ? true : false
       });
 
+      localStorage.setItem('idUser', res['US_CODIGO']);
 
-    },(err)=>{
-      
-         Swal.fire('Error', err.error.message, 'error');
-
-    });
-
-
+      })
+    );
   }
 
   eliminarUsuario(id:string){
@@ -310,24 +321,25 @@ export class UsuariosComponent implements AfterViewInit,OnInit,OnDestroy {
       confirmButtonText:'Confirmar'
     }).then((result)=>{
         if (result.isConfirmed) {
-          this.usuarioSvc.deleteUsuario(id).subscribe((res:any)=>{
-            
-            Swal.fire({
-              icon:'success',
-              title:'Usuario eliminado correctamente',
-              confirmButtonText:'Ok'            
-            }).then((result)=>{
-                
-              if (result) {
-                this.obtenerUsuario();
-              }
-  
-            });
-  
-          }, (err)=>{
-            Swal.fire('Error', err.error.message, 'error')
-          })
-          
+          this.subscription.add(
+            this.usuarioSvc.deleteUsuario(id).subscribe((res:any)=>{
+              
+              Swal.fire({
+                icon:'success',
+                title:'Usuario eliminado correctamente',
+                confirmButtonText:'Ok'            
+              }).then((result)=>{
+                  
+                if (result) {
+                  this.obtenerUsuario();
+                }
+    
+              });
+    
+            }, (err)=>{
+              Swal.fire('Error', err.error.message, 'error')
+            })
+          )
         }      
 
     });
@@ -335,8 +347,8 @@ export class UsuariosComponent implements AfterViewInit,OnInit,OnDestroy {
 
   }
 
-  ngOnDestroy(){
-
+  ngOnDestroy():void{
+    this.subscription.unsubscribe();
   }
 
   openDialog(id:string): void {
@@ -351,14 +363,16 @@ export class UsuariosComponent implements AfterViewInit,OnInit,OnDestroy {
       },
       height: '45%',
       width: '45%',
-      disableClose: true
+      disableClose: true,
+      autofocus: true
     }
     const dialogRef = this.dialog.open(DialogComponent, config);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialogo respuesta: ${result}`);
-      localStorage.removeItem('userId');
-    });
+    this.subscription.add(
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialogo respuesta: ${result}`);
+        localStorage.removeItem('userId');
+      })
+    );
   }
   
 }

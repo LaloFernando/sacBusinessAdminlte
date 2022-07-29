@@ -27,7 +27,7 @@ export class BreadcrumbsComponent {
       )
       .subscribe(({ titulo }) => {
         this.titulo = titulo;
-        document.title = `Newsystem - ${titulo}`;
+        document.title = `SacBusiness - ${titulo}`;
       })
   
   }

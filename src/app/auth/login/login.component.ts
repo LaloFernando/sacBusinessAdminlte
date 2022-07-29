@@ -31,7 +31,7 @@ export class LoginComponent {
       }else{
         localStorage.removeItem('user');
       }
-      this.router.navigateByUrl('/dashboard')
+      this.router.navigate(['dashboard']);
     },(err) => {
       Swal.fire('Error', err.error.message,'error');
     });
